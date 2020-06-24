@@ -33,15 +33,15 @@ class AuthorService {
     
     @discardableResult
     func fetchPostsFor(author id: String, completion: @escaping ([Post]?, CustomError?) -> ()) -> URLSessionDataTask? {
-        let params: JSON = [:]
+        let params: JSON = ["_authorId": id, "_sort": "date", "_order": "desc"]
         
-        return client.load(path: "/authors", method: .get, params: params) { result, error in
+        return client.load(path: "/posts", method: .get, params: params) { result, error in
             if (error != nil) {
                 completion(nil, error)
             }
             else if (result != nil) {
-                let authors = try! JSONDecoder().decode(Authors.self, from: result as! Data)
-                completion(authors, nil)
+                let posts = try! JSONDecoder().decode(Posts.self, from: result as! Data)
+                completion(posts, nil)
             }
             else {
                 completion(nil, CustomError(code: 405, type: "NoResult", message: "No results found"))

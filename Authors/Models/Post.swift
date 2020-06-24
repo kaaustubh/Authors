@@ -22,3 +22,5 @@ struct Post: Codable {
         case authorID = "authorId"
     }
 }
+
+typealias Posts = [Post]

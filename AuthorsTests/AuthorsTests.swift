@@ -19,9 +19,18 @@ class AuthorsTests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
-    func testExample() throws {
-         let postsExpectation = expectation(description: "Get Posts")
+    func testFetchAuthors() throws {
+         let postsExpectation = expectation(description: "Get Authors")
                _ = AuthorService().fetchAuthors(completion: { posts,error in
+                   if let posts = posts, posts.count > 0 {
+                       postsExpectation.fulfill()
+                   }
+               })
+         waitForExpectations(timeout: 3)
+    }
+    func testFetchPostsForAuthors() throws {
+         let postsExpectation = expectation(description: "Get Posts")
+        _ = AuthorService().fetchPostsFor(author: "12", completion: { posts,error in
                    if let posts = posts, posts.count > 0 {
                        postsExpectation.fulfill()
                    }
