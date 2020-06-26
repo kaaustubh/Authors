@@ -18,6 +18,7 @@ class AuthorService {
         
         return client.load(path: "/authors", method: .get, params: params) { result, error in
             if (error != nil) {
+                
                 completion(nil, error)
             }
             else if (result != nil) {

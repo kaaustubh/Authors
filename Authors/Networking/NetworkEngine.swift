@@ -39,14 +39,20 @@ final class NetworkEngine {
             if let data = data {
                 if let httpResponse = response as? HTTPURLResponse {
                     if (200..<300) ~= httpResponse.statusCode {
-                        completion(data, nil)
+                         DispatchQueue.main.async{
+                            completion(data, nil)
+                        }
                     }
                     else {
+                         DispatchQueue.main.async{
                         completion(nil, CustomError(code: httpResponse.statusCode, type: "Invalid", message: httpResponse.description))
+                        }
                     }
                 }else {
                     let error = try? JSONDecoder().decode(CustomError.self, from: data)
-                    completion(nil, error)
+                     DispatchQueue.main.async{
+                        completion(nil, error)
+                    }
                 }
             }
         }
