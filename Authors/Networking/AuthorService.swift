@@ -17,16 +17,26 @@ class AuthorService {
         let params: JSON = [:]
         
         return client.load(path: "/authors", method: .get, params: params) { result, error in
+            let authors = LocalStorage().getAuthors()
             if (error != nil) {
-                
+                if authors.count > 0{
+                    completion(authors, nil)
+                }
                 completion(nil, error)
             }
             else if (result != nil) {
                 let authors = try! JSONDecoder().decode(Authors.self, from: result as! Data)
                 completion(authors, nil)
+                LocalStorage().saveAuthors(authors: authors)
             }
             else {
-                completion(nil, CustomError(code: 405, type: "NoResult", message: "No results found"))
+                if authors.count > 0{
+                    completion(authors, nil)
+                }
+                else {
+                    completion(nil, CustomError(code: 405, type: "NoResult", message: "No results found"))
+                }
+                
             }
         }
     }

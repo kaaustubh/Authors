@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "3287946E24A3CF65007F773C"
-               BuildableName = "Authors.app"
-               BlueprintName = "Authors"
-               ReferencedContainer = "container:Authors.xcodeproj">
+               BuildableName = "AuthorsDemo.app"
+               BlueprintName = "AuthorsDemo"
+               ReferencedContainer = "container:AuthorsDemo.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,19 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "3287948424A3CF67007F773C"
-               BuildableName = "AuthorsTests.xctest"
-               BlueprintName = "AuthorsTests"
-               ReferencedContainer = "container:Authors.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "3287948F24A3CF67007F773C"
-               BuildableName = "AuthorsUITests.xctest"
-               BlueprintName = "AuthorsUITests"
-               ReferencedContainer = "container:Authors.xcodeproj">
+               BuildableName = "AuthorsDemoTests.xctest"
+               BlueprintName = "AuthorsDemoTests"
+               ReferencedContainer = "container:AuthorsDemo.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -65,9 +55,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "3287946E24A3CF65007F773C"
-            BuildableName = "Authors.app"
-            BlueprintName = "Authors"
-            ReferencedContainer = "container:Authors.xcodeproj">
+            BuildableName = "AuthorsDemo.app"
+            BlueprintName = "AuthorsDemo"
+            ReferencedContainer = "container:AuthorsDemo.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -82,9 +72,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "3287946E24A3CF65007F773C"
-            BuildableName = "Authors.app"
-            BlueprintName = "Authors"
-            ReferencedContainer = "container:Authors.xcodeproj">
+            BuildableName = "AuthorsDemo.app"
+            BlueprintName = "AuthorsDemo"
+            ReferencedContainer = "container:AuthorsDemo.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

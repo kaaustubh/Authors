@@ -20,6 +20,10 @@ struct Author: Codable {
         case avatarURL = "avatarUrl"
         case address
     }
+    
+    func getAddress() -> String {
+        return "\(self.address.latitude), \(self.address.longitude)"
+    }
 }
 
 // MARK: - Address

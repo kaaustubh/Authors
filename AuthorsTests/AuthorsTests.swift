@@ -7,7 +7,7 @@
 //
 
 import XCTest
-@testable import Authors
+@testable import AuthorsDemo
 
 class AuthorsTests: XCTestCase {
 
@@ -37,6 +37,16 @@ class AuthorsTests: XCTestCase {
                })
          waitForExpectations(timeout: 3)
     }
+    
+//    func testLocalStorage() throws {
+//        let author1 = Author(id: 12, name: "Test", userName: "Username", email: "abc@gmail.com", avatarURL: "https://google.com", address: Address(latitude: "lat", longitude: "long"))
+//        var authors = [Author]()
+//        authors.append(author1)
+//        LocalStorage().saveAuthors(authors: [author1])
+//        let savedAuthor = LocalStorage().getAuthors();
+//        XCTAssertTrue(savedAuthor.count > 0)
+//
+//    }
 
     func testPerformanceExample() throws {
         // This is an example of a performance test case.

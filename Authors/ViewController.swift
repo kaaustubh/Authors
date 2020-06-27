@@ -8,8 +8,11 @@
 
 import UIKit
 import SwiftSpinner
+protocol ShowDetailsProtocol: class {
+    func showDetails(data: Author)
+}
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, ShowDetailsProtocol {
 
     @IBOutlet weak var authorsTableView: UITableView!
     var authorsDataSource = AuthorsDataSource()
@@ -18,6 +21,9 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         self.authorsTableView.dataSource = authorsDataSource
+        self.authorsTableView.delegate = authorsDataSource
+        authorsDataSource.delegate = self
+        
         SwiftSpinner.show("Loading...")
         AuthorService().fetchAuthors() {[weak self] authors, error in
             guard let self = self else {return}
@@ -31,13 +37,25 @@ class ViewController: UIViewController {
         }
         // Do any additional setup after loading the view.
     }
+    
+    func showDetails(data: Author) {
+        self.performSegue(withIdentifier: "authordetails", sender: data)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "authordetails" {
+            guard let object = sender as? Author else {
+                return
+            }
+            let dvc = segue.destination as! AuthorDetailsController
+            dvc.author = object
+        }
+    }
 }
-
-
 
 class AuthorsDataSource: NSObject {
     var authors = [Author]()
-    
+    weak var delegate: ShowDetailsProtocol!
     func appendAuthor(authors: [Author]) {
         self.authors.append(contentsOf: authors)
     }
@@ -55,6 +73,10 @@ extension AuthorsDataSource : UITableViewDataSource {
         cell.setData(author: authors[indexPath.row])
         return cell
     }
-    
-    
 }
+extension AuthorsDataSource : UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.delegate.showDetails(data: authors[indexPath.row])
+    }
+}
+
