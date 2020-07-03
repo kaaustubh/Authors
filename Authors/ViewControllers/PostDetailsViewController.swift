@@ -24,7 +24,8 @@ class PostDetailsViewController: UIViewController {
             bodyLabel.text = post.body
             self.commentsTableView.dataSource = commentsDataSource
             SwiftSpinner.show("Loading comments...")
-            AuthorService().fetchCommentsFor(post: String(post.id), completion: { comments,error in
+            AuthorService().fetchCommentsFor(post: String(post.id), completion: {[weak self] comments,error in
+                guard let self = self else {return}
               DispatchQueue.main.async{
                 SwiftSpinner.hide()
                 if let comments = comments, comments.count > 0, error == nil {
