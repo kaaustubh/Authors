@@ -76,6 +76,7 @@ extension AuthorsDataSource : UITableViewDataSource {
 }
 extension AuthorsDataSource : UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
         self.delegate.showDetails(data: authors[indexPath.row])
     }
 }

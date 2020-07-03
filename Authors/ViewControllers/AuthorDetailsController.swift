@@ -100,6 +100,7 @@ extension PostsDataSource : UITableViewDataSource {
 extension PostsDataSource : UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.delegate.showDetails(data: posts[indexPath.row])
+        tableView.deselectRow(at: indexPath, animated: true)
     }
 }
 
