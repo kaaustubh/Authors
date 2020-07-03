@@ -21,13 +21,20 @@ class AuthorService {
                 let authors = try! JSONDecoder().decode(Authors.self, from: result as! Data)
                 if authors.count > 0{
                     completion(authors, nil)
+                    LocalStorage().saveAuthors(authors: authors)
+                }
+                else {
+                        completion(nil, CustomError(code: 405, type: "NoResult", message: "No results found"))
+                }
+            }
+            else {
+                let authors = LocalStorage().getAuthors()
+                if authors.count > 0 {
+                    completion(authors, nil)
                 }
                 else {
                     completion(nil, CustomError(code: 405, type: "NoResult", message: "No results found"))
                 }
-            }
-            else {
-                completion(nil, CustomError(code: 405, type: "NoResult", message: "No results found"))
             }
         }
     }
@@ -39,11 +46,18 @@ class AuthorService {
         
         return client.load(path: "/posts", method: .get, params: params) { result, error in
             if (error != nil) {
-                completion(nil, error)
+                let posts = LocalStorage().getPostsOf(authorId: id)
+                if posts.count > 0 {
+                    completion(posts, nil)
+                }
+                else {
+                    completion(nil, error)
+                }
             }
             else if (result != nil) {
                 let posts = try! JSONDecoder().decode(Posts.self, from: result as! Data)
                 completion(posts, nil)
+                LocalStorage().savePostsOf(authorId: id, posts: posts)
             }
             else {
                 completion(nil, CustomError(code: 405, type: "NoResult", message: "No results found"))
@@ -56,10 +70,17 @@ class AuthorService {
         let params: JSON = [ "_sort": "date", "_order": "asc"]
         return client.load(path: "/posts/\(id)/comments", method: .get, params: params) { result, error in
             if (error != nil) {
-                completion(nil, error)
+                let comments = LocalStorage().getCommentsFor(postId: id)
+                if comments.count > 0 {
+                    completion(comments, nil)
+                }
+                else {
+                    completion(nil, error)
+                }
             }
             else if (result != nil) {
                 let comments = try! JSONDecoder().decode(Comments.self, from: result as! Data)
+                LocalStorage().saveCommentsFor(postId: id, comments: comments)
                 completion(comments, nil)
             }
             else {

@@ -6,6 +6,7 @@ target 'AuthorsDemo' do
   use_frameworks!
   pod 'SwiftSpinner', '~> 2.1'
   pod 'ExpandableLabel'
+  pod 'DefaultsKit'
   # Pods for Authors
 	
   target 'AuthorsDemoTests' do

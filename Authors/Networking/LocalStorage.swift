@@ -7,15 +7,16 @@
 //
 
 import Foundation
-
+import DefaultsKit
 
 class LocalStorage {
     static let shared = LocalStorage()
-    
+    let defaults = Defaults()
     let shoppingListKey = "shopping_list"
     let webFeeds = "webfeeds"
     let lastDate = "lastupdateddate"
     let authors_key = "authors"
+    let key_authors = Key<Authors>("personKey")
     
     let userDefaults = UserDefaults.standard
     
@@ -32,52 +33,44 @@ class LocalStorage {
     }
     
     func saveAuthors(authors: [Author]) {
-        saveData(data: authors, for: authors_key)
+        defaults.set(authors, for: key_authors)
     }
     
     func savePostsOf(authorId: String, posts: [Post]) {
-        saveData(data: posts, for: authorId)
+        let key = Key<Posts>(authorId)
+        defaults.set(posts, for: key)
     }
     
     func saveCommentsFor(postId: String, comments: [Comment]) {
-        saveData(data: comments, for: postId)
+        let key = Key<Comments>(postId)
+        defaults.set(comments, for: key)
     }
     
     func getAuthors() -> Authors {
         var authors = [Author]()
-        if let data = self.data(for: authors_key), let parsedData = (data as? Authors) {
-            authors = parsedData
+        if let data = defaults.get(for: key_authors) {
+            authors = data
         }
         return authors
     }
     
     func getPostsOf(authorId: String) -> Posts {
         var posts = [Post]()
-        if let data = self.data(for: authorId), let parsedData = (data as? Posts) {
-            posts = parsedData
-        }
+        let key = Key<Posts>(authorId)
         
+        if let data = defaults.get(for: key) {
+            posts = data
+        }
         return posts
     }
     
     func getCommentsFor(postId: String) -> Comments{
         var comments = [Comment]()
-        if let data = self.data(for: postId), let parsedData = (data as? Comments) {
-            comments = parsedData
-        }
+        let key = Key<Comments>(postId)
         
+        if let data = defaults.get(for: key) {
+            comments = data
+        }
         return comments
     }
-    
-    func saveData(data: Any, for key: String) {
-//        UserDefaults.standard.set(data, forKey: key)
-//        userDefaults.synchronize()
-    }
-    
-    func data(for key: String) -> Any? {
-        if let data = UserDefaults.standard.object(forKey: key) {
-            return data
-        }
-        return nil
-}
 }

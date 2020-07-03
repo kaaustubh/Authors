@@ -1,20 +1,24 @@
 PODS:
+  - DefaultsKit (0.2.0)
   - ExpandableLabel (0.5.2)
   - SwiftSpinner (2.1.0)
 
 DEPENDENCIES:
+  - DefaultsKit
   - ExpandableLabel
   - SwiftSpinner (~> 2.1)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
+    - DefaultsKit
     - ExpandableLabel
     - SwiftSpinner
 
 SPEC CHECKSUMS:
+  DefaultsKit: 6c767941b2c3fe34c4d70e300e6c3b80c94964dd
   ExpandableLabel: c2fab6d27860c572d67134b30522a5917746171d
   SwiftSpinner: 0f15c006307f8d8bbac075638927ec1361b565d7
 
-PODFILE CHECKSUM: 4cbe9efe458a87d1dc395c6f73f9b696e55e1ad3
+PODFILE CHECKSUM: dc1a115dd8f1c3f58b6cac94240e2736de84d118
 
 COCOAPODS: 1.5.3
