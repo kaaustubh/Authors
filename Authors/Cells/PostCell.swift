@@ -11,7 +11,6 @@ import UIKit
 class PostCell: UITableViewCell {
 
     @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var bodyLabel: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -24,8 +23,6 @@ class PostCell: UITableViewCell {
     }
 
     func setData(post: Post){
-        //"\(self.address.latitude), \(self.address.longitude)"
-        self.titleLabel.text = "\(post.title): \(post.date)"
-        self.bodyLabel.text = post.body
+        self.titleLabel.text = post.title
     }
 }

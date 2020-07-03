@@ -5,6 +5,7 @@ target 'AuthorsDemo' do
   # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
   use_frameworks!
   pod 'SwiftSpinner', '~> 2.1'
+  pod 'ExpandableLabel'
   # Pods for Authors
 	
   target 'AuthorsDemoTests' do

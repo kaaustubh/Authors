@@ -9,9 +9,30 @@
 import UIKit
 import SwiftSpinner
 
-class AuthorDetailsController: UIViewController {
+protocol ShowPostDetailsProtocol: class {
+    func showDetails(data: Post)
+}
 
+class AuthorDetailsController: UIViewController, ShowPostDetailsProtocol {
+    
     @IBOutlet weak var postsTableView: UITableView!
+    @IBOutlet weak var emailLabel: UILabel!
+    @IBOutlet weak var addressLabel: UILabel!
+
+    func showDetails(data: Post) {
+        self.performSegue(withIdentifier: "postdetails", sender: data)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "postdetails" {
+            guard let object = sender as? Post else {
+                return
+            }
+            let dvc = segue.destination as! PostDetailsViewController
+            dvc.post = object
+        }
+    }
+    
     var postsDataSource = PostsDataSource()
     var _author: Author?
     var author: Author? {
@@ -22,17 +43,16 @@ class AuthorDetailsController: UIViewController {
             return self._author
         }
     }
-    @IBOutlet weak var usernameLabel: UILabel!
-    
-    @IBOutlet weak var addressLabel: UILabel!
-    
+        
     func showAuthorDetails() {
         
         if let author = self._author {
             self.title = author.name
-            self.usernameLabel.text = "id: \(author.id)\nEmail: \(author.email)"
+            self.emailLabel.text = author.email
             self.addressLabel.text = author.getAddress()
             self.postsTableView.dataSource = postsDataSource
+            self.postsTableView.delegate = postsDataSource
+            postsDataSource.delegate = self
             SwiftSpinner.show("Loading posts...")
             AuthorService().fetchPostsFor(author: String(author.id)) { [weak self] posts, error in
                 guard let self = self else {return}
@@ -51,24 +71,12 @@ class AuthorDetailsController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         showAuthorDetails()
-        // Do any additional setup after loading the view.
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 }
 
 class PostsDataSource: NSObject {
     var posts = [Post]()
-    
+    weak var delegate: ShowPostDetailsProtocol!
     func appendPosts(posts: [Post]) {
         self.posts.append(contentsOf: posts)
     }
@@ -87,6 +95,12 @@ extension PostsDataSource : UITableViewDataSource {
         cell.setData(post: posts[indexPath.row])
         return cell
     }
-    
-    
 }
+
+extension PostsDataSource : UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.delegate.showDetails(data: posts[indexPath.row])
+    }
+}
+
+

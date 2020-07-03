@@ -38,15 +38,15 @@ class AuthorsTests: XCTestCase {
          waitForExpectations(timeout: 3)
     }
     
-//    func testLocalStorage() throws {
-//        let author1 = Author(id: 12, name: "Test", userName: "Username", email: "abc@gmail.com", avatarURL: "https://google.com", address: Address(latitude: "lat", longitude: "long"))
-//        var authors = [Author]()
-//        authors.append(author1)
-//        LocalStorage().saveAuthors(authors: [author1])
-//        let savedAuthor = LocalStorage().getAuthors();
-//        XCTAssertTrue(savedAuthor.count > 0)
-//
-//    }
+    func testFetchCommentForPost() throws {
+        let postsExpectation = expectation(description: "Get comments")
+        _ = AuthorService().fetchCommentsFor(post: "12", completion: { comments,error in
+            if let comments = comments, comments.count > 0 {
+                       postsExpectation.fulfill()
+                   }
+               })
+         waitForExpectations(timeout: 3)
+    }
 
     func testPerformanceExample() throws {
         // This is an example of a performance test case.
